@@ -3,9 +3,11 @@ from djangoform.models import Author
 
 
 class AuthorForm(forms.Form):
-    name = forms.CharField(max_length=50)
-    bio = forms.CharField(widget=forms.Textarea)
-    exclude = ["user"]
+    name = forms.CharField(max_length=500)
+    username = forms.CharField(max_length=50)
+    bio = forms.CharField(widget=forms.Textarea(attrs={'rows': '3'}))
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput())
 
 
 class RecipeForm(forms.Form):

@@ -52,7 +52,8 @@ def create_author(request):
         form = AuthorForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = User.objects.create_user(data['username'], data['email'], data['password'])
+            user = User.objects.create_user(
+                data['username'], data['email'], data['password'])
             login(request, user)
             Author.objects.create(
                 name=data['name'],
@@ -90,7 +91,6 @@ def login_view(request):
 
 
 def logout_view(request):
-    html = 'logout_view.html'
     logout(request)
     messages.info(request, 'Successfully logged out')
     return HttpResponseRedirect(reverse('homepage'))
