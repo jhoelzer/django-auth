@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <meta http-equiv='X-UA-Compatible' content='ie=edge' />
+        <title>Django Recipes</title>
+    </head>
+    <body>
+        {% for element in recipes %}
+        <h1>{{ element.title }}</h1>
+        <p>
+            <strong>Author:</strong>
+            <a href='/author/{{ element.author_id }}'>{{ element.author }}</a>
+        </p>
+        <p><strong>Description of recipe:</strong> {{ element.description }}</p>
+        <p><strong>Time to make:</strong> {{ element.time }}</p>
+
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            {% for obj in instructions %}
+            <li>{{ obj }}</li>
+            {% endfor %}
+        </ol>
+        {% endfor %}
+
+        <a href='/'>Home</a>
+    </body>
+</html>

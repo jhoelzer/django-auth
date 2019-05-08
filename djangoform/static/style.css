@@ -1,0 +1,36 @@
+html {
+    width: 100%;
+    height: auto;
+    background-position: center;
+    background-repeat: repeat;
+}
+
+body {
+    background-color: rgb(255, 255, 255);
+    margin-left: 38%;
+    margin-right: 38%;
+}
+
+h1 {
+    text-align: center;
+    color: #6fb0ce;
+}
+
+a {
+    color: #6fb0ce;
+}
+
+a:hover {
+    color: #5798b6;
+}
+
+button, input#button {
+    background-color: #6fb0ce;
+    color: white;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+button:hover, input#button:hover {
+    background-color: #5798b6;   
+}
