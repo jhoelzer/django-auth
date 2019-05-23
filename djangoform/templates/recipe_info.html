@@ -22,8 +22,19 @@
             <li>{{ obj }}</li>
             {% endfor %}
         </ol>
+            {% if is_author %}
+            <a href="/editrecipe/{{ element.id }}"><button>Edit Recipe</button></a>
+                {% elif is_admin %}
+                <a href="/editrecipe/{{ element.id }}"><button>Edit Recipe</button></a>
+            {% endif %}
+        {% if request.user.is_active %}
+        <form name="favorite" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="rule" value="favorite">
+                            <input type="hidden" name="id" value="{{ element.id }}"/>
+                            <input type="submit" value="Add Recipe to Favorites" />
+            {% endif %}
         {% endfor %}
-
         <a href='/'>Home</a>
     </body>
 </html>

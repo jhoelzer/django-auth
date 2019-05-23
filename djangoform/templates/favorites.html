@@ -1,0 +1,10 @@
+
+<h2>{{ author.name }}'s favorite recipes</h2>
+
+{% for favorite in favorites %}
+<ul>
+    <p>{{ favorite }}</p>
+</ul>
+{% endfor %}
+
+<a href='/'>Home</a>

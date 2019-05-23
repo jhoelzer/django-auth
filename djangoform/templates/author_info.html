@@ -8,8 +8,10 @@
     </head>
     <body>
         {% for element in authors %}
+
         <h1>Author: {{ element.name }}</h1>
         <p><strong>Author Bio:</strong> {{ element.bio }}</p>
+            <a href="/favorites/{{ element.id }}">Favorites</a>
         {% endfor %}
         <h2>Recipes:</h2>
         {% for rec in recipes %}
@@ -18,6 +20,7 @@
                 <a href='/recipes/{{ rec.id }}'>{{ rec.title }}</a>
             </li>
         </ul>
+
         {% endfor %}
 
         <a href='/'>Home</a>

@@ -11,7 +11,12 @@
         {% for rec in list %}
         <li>
             <a href='recipes/{{ rec.id }}'>{{ rec.title }}</a>
+
         </li>
         {% endfor %}
+        <br>
+        {% if request.user.is_active %}
+    <a href="/favorites/{{ request.user.author.id }}">My Favorites</a>
+    {% endif %}
     </body>
 </html>

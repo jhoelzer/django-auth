@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from djangoform.views import (
     list_view, author_info, recipe_info, create_author, create_recipe,
-    login_view, logout_view)
+    login_view, logout_view, editrecipe, favorite)
 
 admin.site.register(Author)
 admin.site.register(Recipes)
@@ -32,5 +32,7 @@ urlpatterns = [
     path('createrecipe/', create_recipe),
     path('createauthor/', create_author),
     path('login/', login_view),
-    path('logout/', logout_view)
+    path('logout/', logout_view),
+    path('editrecipe/<int:id>', editrecipe),
+    path('favorites/<int:id>', favorite)
 ]
