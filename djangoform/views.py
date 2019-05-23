@@ -38,9 +38,17 @@ def create_recipe(request):
 def recipe_info(request, id):
     html = 'recipe_info.html'
     items = Recipes.objects.all().filter(id=id)
+    author = Recipes.objects.all().filter(id=id).values_list('id', flat=True).first()
     instructions = items[0].instructions.split('\n')
+
+    if request.method == "POST":
+        current_author = Author.objects.filter(user=request.user).first()
+        rule = request.POST.get('rule')
+        recipe_id = request.POST.get('id')
+        if rule == 'favorite':
+            current_author.favorite.add(recipe_id)
     return render(request, html,
-                  {'recipes': items, 'instructions': instructions})
+                  {'recipes': items, 'instructions': instructions, 'is_admin': True if request.user.is_superuser is True else False, 'is_author': True if request.user.id == author else False})
 
 
 @login_required()
@@ -94,3 +102,37 @@ def logout_view(request):
     logout(request)
     messages.info(request, 'Successfully logged out')
     return HttpResponseRedirect(reverse('homepage'))
+
+def favorite(request, id):
+    html = 'favorites.html'
+    author = Author.objects.all().filter(id=id).first()
+    favorites = author.favorite.all()
+    print(author)
+
+    return render(request, html, {'author': author, 'favorites': favorites})
+
+@login_required()
+def editrecipe(request, id):
+    html = 'edit_recipe.html'
+    form = None
+    recipe = Recipes.objects.filter(id=id)
+    title = Recipes.objects.filter(id=id).values_list('title', flat=True).first()
+    author = Recipes.objects.filter(id=id).values_list('author', flat=True).first()
+    description = Recipes.objects.filter(id=id).values_list('description', flat=True).first()
+    time = Recipes.objects.filter(id=id).values_list('time', flat=True).first()
+    instructions = Recipes.objects.filter(id=id).values_list('instructions', flat=True).first()
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            recipe.update(
+                title=data['title'],
+                author=data['author'],
+                description=data['description'],
+                time=data['time'],
+                instructions=data['instructions'],
+            )
+        return render(request, 'updated_recipe.html')
+    else:
+        form = RecipeForm(initial={'title': title, 'author': author, 'description': description, 'time': time, 'instructions': instructions})
+    return render(request, html, {'form': form})
